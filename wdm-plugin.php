@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name: WDM Plugin
- * Plugin URI: 
+ * Plugin URI: https://github.com/arkaprrava-wisdmlabs/task_3.git
  * Description: 
  * Version: 1.0.0
  * Author: Arkaprava
