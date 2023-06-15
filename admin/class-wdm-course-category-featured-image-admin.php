@@ -27,7 +27,7 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
          * @return void
          */
         public function wdm_admin_notice(){
-            ?><div class="error"><p><?php _e( 'Sorry, but Customer Information Meta Plugin requires the LearnDash and Category Featured Image plugin both to be installed and active.' ); ?></p></div><?php
+            ?><div class="error"><p><?php _e( 'Sorry, but Course Category Featured Image  Plugin requires the LearnDash and Category Featured Image plugin both to be installed and active.' ); ?></p></div><?php
         }
     }
 }
