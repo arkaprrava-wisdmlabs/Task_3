@@ -1,0 +1,33 @@
+.row{
+    display:inline-flex;
+    margin: 0 auto;
+}
+.course_category_card{
+    background-color: white;
+    display: inline-flex;
+    width: 385px;
+    padding: 10px;
+    margin: 10px 5px;
+    border: 1px solid white;
+    border-radius: 12px;
+}
+.course_category_card .figure {
+    padding: 5px 10px;
+    margin-right: 20px;
+}
+.course_category_card .figure img {
+    border: 1px solid white;
+    border-radius: 8px;
+    width: 100px;
+    height: 100px;
+}
+.course_category_link {
+    margin: 30px 0px;
+}
+.course_category_link button {
+    background-color: rgb(72, 205, 238);
+    color: white;
+    font-weight: bold;
+    border:1px solid rgb(72, 205, 238);
+    border-radius: 25px;
+}
