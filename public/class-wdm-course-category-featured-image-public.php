@@ -32,7 +32,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
          */
         public function wdm_shortcode($atts){
             $out = '<div class="course-category">';
-            $head = '<center class="course_category_heading"><h2>Course Categories</h2></center>';
+            $head = '<center class="course_category_heading"><h2>'.__('Courses', 'wdm_cfi').'</h2></center>';
             $number_of_course_category = 0;
             if(isset($atts['categorynumber'])){
                 $number_of_course_category = $atts['categorynumber'];
@@ -60,7 +60,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
             $out .= '<div class="course_category_content"'.$content_style.' >';
             $terms = get_terms(array( 'taxonomy' => 'ld_course_category', 'number' => $number_of_course_category ));
             if( empty($terms) ){
-                $out .= '<p>'.__('No Course Category found', 'cfi') .'</p></div>';
+                $out .= '<p>'.__('No Course Category found', 'wdm_cfi') .'</p></div>';
                 return $out;
             }
             $a = 0;
@@ -77,7 +77,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
                 if($count < 2){
                     $text = ' Course';
                 }
-                $out .= '<p>'.$term->count.__($text, 'cfi').'</p>';
+                $out .= '<p>'.$term->count.__($text, 'wdm_cfi').'</p>';
                 $out .= '</div>';
                 $out .= '</div></a>';
                 if($a%3 === 2){
@@ -87,7 +87,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
             }
             $out .= '</div>';
             if( $number_of_course_category > 0 ){
-                $out .= '<center class="course_category_link"><a href="'.$category_link.'"><button>'.__('See More', 'cfi').'</button></a></center>';
+                $out .= '<center class="course_category_link"><a href="'.$category_link.'"><button>'.__('See More', 'wdm_cfi').'</button></a></center>';
             }
             $out .= '</div>';
             return $out;
