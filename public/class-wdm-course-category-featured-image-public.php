@@ -32,7 +32,8 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
          */
         public function wdm_shortcode($atts){
             $out = '<div class="course-category">';
-            $head = '<center class="course_category_heading"><h2>'.__('Courses', 'wdm_cfi').'</h2></center>';
+            $course_text = learndash_get_custom_label( 'course' );
+            $head = '<center class="course_category_heading"><h2>'.__( $course_text.' Categories', 'wdm_cfi').'</h2></center>';
             $number_of_course_category = 0;
             if(isset($atts['categorynumber'])){
                 $number_of_course_category = $atts['categorynumber'];
@@ -41,7 +42,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
             $content_style = '';
             $card_style = '';
             $category_link = '';
-            $category_page = get_page_by_title('Course Categories');
+            $category_page = get_page_by_title( $course_text.' Categories');
             if(!empty($category_page)){
                 if( $category_page->post_status === 'publish' ){
                     $category_link = get_permalink( $category_page );
@@ -60,7 +61,7 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
             $out .= '<div class="course_category_content"'.$content_style.' >';
             $terms = get_terms(array( 'taxonomy' => 'ld_course_category', 'number' => $number_of_course_category ));
             if( empty($terms) ){
-                $out .= '<p>'.__('No Course Category found', 'wdm_cfi') .'</p></div>';
+                $out .= '<p>'.__('No '.$course_text.' Category found', 'wdm_cfi') .'</p></div>';
                 return $out;
             }
             $a = 0;
@@ -69,13 +70,13 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
                     $out .= '<div class="row">';
                 }
                 $out .= '<a href="'.get_term_link($term, 'ld_course_category').'"><div class="course_category_card"'.$card_style.' >';
-                $out .= '<div class="figure"><img src="'.$this->plugin_dir_url.'public/assets/images/course-category-image.jpeg" alt="Course Category image"></div>';
+                $out .= '<div class="figure"><img src="'.$this->plugin_dir_url.'public/assets/images/course-category-image.jpeg" alt="'.$course_text.' Category image"></div>';
                 $out .= '<div class="course_category_card_content">';
                 $out .= '<h4>'.$term->name.'</h4>';
                 $count = $term->count;
-                $text = ' Courses';
+                $text = ' '.$course_text.'s';
                 if($count < 2){
-                    $text = ' Course';
+                    $text = ' '.$course_text;
                 }
                 $out .= '<p>'.$term->count.__($text, 'wdm_cfi').'</p>';
                 $out .= '</div>';
