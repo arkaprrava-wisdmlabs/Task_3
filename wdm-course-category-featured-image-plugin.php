@@ -14,19 +14,45 @@ defined( 'ABSPATH' ) || die;
 
 if( ! class_exists( 'WDM_Course_Category_Featured_Image_Plugin' ) ){
     class WDM_Course_Category_Featured_Image_Plugin{
+        /**
+         * plugin name
+         *
+         * @var [type]
+         */
         protected $plugin_name;
+        /**
+         * plugin_dir_url
+         *
+         * @var [type]
+         */
         protected $plugin_dir_url;
+        /**
+         * defines plugin name and plugin dir url for the class
+         *
+         * @param [type] $plugin_name
+         * @param [type] $plugin_dir_url
+         */
         public function __construct($plugin_name, $plugin_dir_url){
             $this->plugin_name = $plugin_name;
             $this->plugin_dir_url = $plugin_dir_url;
             $this->define_admin_hooks();
             $this->define_public_hooks();
         }
+        /**
+         * defines admin hooks
+         *
+         * @return void
+         */
         public function define_admin_hooks(){
             require_once plugin_dir_path( __FILE__ ) . 'admin/class-wdm-course-category-featured-image-admin.php';
             $admin = new WDM_Course_Category_Featured_Image_Admin($this->plugin_name);
             add_action( 'admin_init',array( $admin, 'wdm_has_learndash' ) , 10, 0);
         }
+        /**
+         * defines public hooks
+         *
+         * @return void
+         */
         public function define_public_hooks(){
             require_once plugin_dir_path( __FILE__ ) . 'public/class-wdm-course-category-featured-image-public.php';
             $public = new WDM_Course_Category_Featured_Image_Public($this->plugin_dir_url);
