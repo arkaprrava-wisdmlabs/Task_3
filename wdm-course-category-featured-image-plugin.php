@@ -47,6 +47,10 @@ if( ! class_exists( 'WDM_Course_Category_Featured_Image_Plugin' ) ){
             require_once plugin_dir_path( __FILE__ ) . 'admin/class-wdm-course-category-featured-image-admin.php';
             $admin = new WDM_Course_Category_Featured_Image_Admin($this->plugin_name);
             add_action( 'admin_init',array( $admin, 'wdm_has_learndash' ) , 10, 0);
+            add_action( 'ld_course_category_edit_form_fields',array( $admin, 'wdm_edit_course_terms_form_fields') , 10, 2 );
+            add_action( 'ld_course_category_add_form_fields', array( $admin, 'wdm_add_course_terms_form_fields'), 10, 1 );
+            add_action('create_term', array( $admin, 'wdm_save_terms') , 10, 2);
+            add_action('edit_terms', array( $admin, 'wdm_save_terms'), 10, 2);
         }
         /**
          * defines public hooks
