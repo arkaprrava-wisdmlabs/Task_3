@@ -7,8 +7,8 @@ The output of the shortcode should be as follows:
 ![image](https://github.com/arkaprrava-wisdmlabs/task_3/assets/123532079/337a9793-15c3-48b3-b0d5-fbbfdfaccdb2)
 
 The parameter for the shortcode will be:
-The number of courses to be displayed at a time - Optional. If this parameter is not used, all categories should show up.
-Use this shortcode on a homepage. The "See more" button will be a link to a page where all the categories with the number of courses will be displayed in the same format as above.
+1. The number of courses to be displayed at a time - Optional. If this parameter is not used, all categories should show up.
+2. Use this shortcode on a homepage. The "See more" button will be a link to a page where all the categories with the number of courses will be displayed in the same format as above.
 
 
 ## Approach:
