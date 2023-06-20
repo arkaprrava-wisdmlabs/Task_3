@@ -69,8 +69,14 @@ if( ! class_exists( 'WDM_Plugin_Public' )){
                 if($a%3 === 0){
                     $out .= '<div class="row">';
                 }
+                $term_id = $term->term_id;
+                $image_id = intval( get_term_meta( $term_id, 'featured_image_id', true ) );
+                $image_url= plugin_dir_url(__FILE__).'assets/images/course-category-image.jpeg';
+                if($image_id > 0){
+                    $image_url = esc_url( wp_get_attachment_url( $image_id ) );
+                }
                 $out .= '<a href="'.get_term_link($term, 'ld_course_category').'"><div class="course_category_card"'.$card_style.' >';
-                $out .= '<div class="figure"><img src="'.$this->plugin_dir_url.'public/assets/images/course-category-image.jpeg" alt="'.$course_text.' Category image"></div>';
+                $out .= '<div class="figure"><img src="'.$image_url.'" alt="'.$course_text.' Category image"></div>';
                 $out .= '<div class="course_category_card_content">';
                 $out .= '<h4>'.$term->name.'</h4>';
                 $count = $term->count;
