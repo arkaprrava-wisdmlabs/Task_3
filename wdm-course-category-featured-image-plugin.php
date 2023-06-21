@@ -45,7 +45,6 @@ if( ! class_exists( 'WDM_Course_Category_Featured_Image_Plugin' ) ){
          */
         public function define_admin_hooks(){
             require_once plugin_dir_path( __FILE__ ) . 'admin/class-wdm-course-category-featured-image-admin.php';
-            require_once WP_PLUGIN_DIR.'\category-featured-image\lib\class-categoryfeaturedimage.php';
             $reflector = new \ReflectionClass('CategoryFeaturedImage');
             $categoryfeaturedimage = $reflector->newInstanceWithoutConstructor();
             add_action('manage_edit-ld_course_category_columns',array( $categoryfeaturedimage, 'add_term_columns'), 10, 1);
