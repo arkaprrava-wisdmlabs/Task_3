@@ -7,20 +7,22 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
          * @var [type]
          */
         protected $plugin_name;
+        protected $plugin_dir_url;
         /**
          * defines plugin name
          *
          * @param [type] $plugin_name
          */
-        public function __construct($plugin_name){
+        public function __construct($plugin_name, $plugin_dir_url){
             $this->plugin_name = $plugin_name;
+            $this->plugin_dir_url = $plugin_dir_url;
         }
         /**
          * requires and always check for the woocommerce plugin
          *
          * @return void
          */
-        public function wdm_has_learndash() {
+        public function wdm_has_dependencies() {
             if ( is_admin() && current_user_can( 'activate_plugins' ) &&  (!is_plugin_active( 'category-featured-image/categoryfeaturedimage.php') || !is_plugin_active( 'sfwd-lms/sfwd_lms.php') )) {
                 add_action( 'admin_notices',array( $this, 'wdm_admin_notice' ), 10, 0);
 
@@ -45,6 +47,15 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
          * @param [type] $taxonomy
          * @return void
          */
+        public function wdm_admin_enqueue_scripts(){
+            wp_enqueue_script( 'admin-js', $this->plugin_dir_url.'admin/assets/js/admin.js', array('jquery'), null, true);
+            wp_localize_script( 'admin-js', 'translations', array(
+                'change' => __('Change Image', 'cfi'),
+                'add' => __('Add new image', 'cfi'),
+                'delete' => __('Delete', 'cfi'),
+                'clear' => __('Clear Image', 'cfi')
+            ) );
+        }
         public function wdm_add_course_terms_form_fields($taxonomy){
             if( $taxonomy === 'ld_course_category' ){
                 ?>
@@ -56,42 +67,6 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
                     <?php wp_nonce_field( 'fi_id_set', 'featured_image_id_set' ); ?>
                     <input type='hidden' name='featured_image_id' id='featured_image_id' value="">
                 </div>
-                <script type='text/javascript'>
-                    jQuery( document ).ready( function( $ ) {
-                        /* Uploading files */
-                        $('#upload_image_button').click(function(event){
-                            event.preventDefault();
-                            var upload = wp.media({
-                                title:'Choose Image', //Title for Media Box
-                                multiple:false //For limiting multiple image
-                            }).on('select', function(){
-                                var select = upload.state().get('selection');
-                                var attach = select.first().toJSON();
-                                // jQuery('img#preview').attr('src',attach.url);
-                                var text1 = '<img src="';
-                                var text2 = '" alt="image preview" width="100px" />';
-                                var text3 = text1.concat(attach.url,text2);
-                                $('#upload_image_button').attr('value','<?php esc_html_e('Change Image', 'cfi') ?>')
-                                $('#image-preview').html(text3);
-                                $('#featured_image_id').attr('value',attach.id);
-                            })
-                            .open();
-                        });
-                        $('#delete_image_button').click(function(event){
-                            event.preventDefault();
-                            $('#upload_image_button').attr('value','<?php esc_html_e('Add new image', 'cfi') ?>')
-                            $('#image-preview').html('');
-                            $('#featured_image_id').attr('value','');
-                            $('#delete_image_button').attr('value','<?php esc_html_e('Delete', 'cfi') ?>');
-                        });
-                        $('#submit').click(function(event){
-                            event.preventDefault();
-                            if($('#featured_image_id').attr('value')){
-                                $('#delete_image_button').attr('value','<?php esc_html_e('Clear Image', 'cfi') ?>');
-                            }
-                        });
-                    });
-                </script>
                 <?php
             }
         }
@@ -107,7 +82,7 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
             $button_text = "Add New Image";
             if(!empty($image_id)){
                 $image_url = esc_url( wp_get_attachment_url( $image_id ) );
-                $button_text = "Choose Image";
+                $button_text = "Change Image";
                 $image_text = '<img src="'.$image_url.'" alt="image preview" width="100px" />';
             }
             if($taxonomy === 'ld_course_category'){
@@ -124,36 +99,6 @@ if( ! class_exists( 'WDM_Plugin_Admin' )){
                         <input type='hidden' name='featured_image_id' id='featured_image_id' value="<?php if(!empty($image_id)){ echo $image_id; } ?>">
                     </td>
                 </tr>
-                <script type='text/javascript'>
-                    jQuery( document ).ready( function( $ ) {
-                        /* Uploading files */
-                        $('#upload_image_button').click(function(event){
-                            event.preventDefault();
-                            var upload = wp.media({
-                                title:'Choose Image', //Title for Media Box
-                                multiple:false //For limiting multiple image
-                            }).on('select', function(){
-                                var select = upload.state().get('selection');
-                                var attach = select.first().toJSON();
-                                // jQuery('img#preview').attr('src',attach.url);
-                                var text1 = '<img src="';
-                                var text2 = '" alt="image preview" width="100px" />';
-                                var text3 = text1.concat(attach.url,text2);
-                                $('#upload_image_button').attr('value','<?php esc_html_e('Change Image', 'cfi') ?>')
-                                $('#image-preview').html(text3);
-                                $('#featured_image_id').attr('value',attach.id);
-                            })
-                            .open();
-                        });
-                        $('#delete_image_button').click(function(event){
-                            event.preventDefault();
-                            $('#upload_image_button').attr('value','<?php esc_html_e('Add new image', 'cfi') ?>')
-                            $('#image-preview').html('');
-                            $('#featured_image_id').attr('value','');
-                            $('#delete_image_button').attr('value','<?php esc_html_e('Delete', 'cfi') ?>');
-                        });
-                    });
-                </script>
                 <?php
             }
         }

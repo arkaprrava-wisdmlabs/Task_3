@@ -21,7 +21,7 @@ if( ! class_exists( 'WDM_Course_Category_Featured_Image_Plugin' ) ){
          */
         protected $plugin_name;
         /**
-         * plugin_dir_url
+         * plugin directory url
          *
          * @var [type]
          */
@@ -49,8 +49,9 @@ if( ! class_exists( 'WDM_Course_Category_Featured_Image_Plugin' ) ){
             $categoryfeaturedimage = $reflector->newInstanceWithoutConstructor();
             add_action('manage_edit-ld_course_category_columns',array( $categoryfeaturedimage, 'add_term_columns'), 10, 1);
             add_action('manage_ld_course_category_custom_column', array( $categoryfeaturedimage, 'add_term_custom_column'), 10, 3);
-            $admin = new WDM_Course_Category_Featured_Image_Admin($this->plugin_name);
-            add_action( 'admin_init',array( $admin, 'wdm_has_learndash' ) , 10, 0);
+            $admin = new WDM_Course_Category_Featured_Image_Admin($this->plugin_name, $this->plugin_dir_url);
+            add_action( 'admin_init',array( $admin, 'wdm_has_dependencies' ) , 10, 0);
+            add_action( 'admin_enqueue_scripts', array( $admin, 'wdm_admin_enqueue_scripts' ), 10, 0 );
             add_action( 'ld_course_category_edit_form_fields',array( $admin, 'wdm_edit_course_terms_form_fields') , 10, 2 );
             add_action( 'ld_course_category_add_form_fields', array( $admin, 'wdm_add_course_terms_form_fields'), 10, 1 );
             add_action('create_term', array( $admin, 'wdm_save_terms') , 10, 2);
